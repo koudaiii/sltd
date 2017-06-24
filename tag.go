@@ -82,3 +82,13 @@ func (c *Client) attachELBTags(tags []elb.Tag, service kubernetes.Service) error
 
 	return nil
 }
+
+func exchangeTypeFromTagsToLabels(tags []elb.Tag) (labels []kubernetes.Label){
+	for _, t := range tags {
+		labels = append(labels, kubernetes.Label{
+			Key: t.Key,
+			Value: t.Value,
+		})
+	}
+	return 	labels
+}

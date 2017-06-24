@@ -41,30 +41,9 @@ func (c *Client) process() {
 			log.Println(err)
 			return
 		}
-
-		c.attachELBTags(tags, c.updateLabelsKubernetesCluseter(tags, s))
+		c.attachELBTags(tags, c.kubeclient.UpdateLabelsKubernetesCluseter(exchangeTypeFromTagsToLabels(tags), s))
 	}
 
-}
-
-func (c *Client) updateLabelsKubernetesCluseter(tags []elb.Tag, service kubernetes.Service) kubernetes.Service {
-	service.Labels = append(service.Labels, kubernetes.Label{
-		Key:   "kube_name",
-		Value: service.KubeName,
-	})
-	service.Labels = append(service.Labels, kubernetes.Label{
-		Key:   "kube_namespace",
-		Value: service.KubeNameSpace,
-	})
-	for _, t := range tags {
-		if t.Key == "KubernetesCluster" {
-			service.Labels = append(service.Labels, kubernetes.Label{
-				Key:   "kubernetescluster",
-				Value: t.Value,
-			})
-		}
-	}
-	return service
 }
 
 func (c *Client) attachELBTags(tags []elb.Tag, service kubernetes.Service) error {

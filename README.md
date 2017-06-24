@@ -5,8 +5,8 @@
 [![Docker Repository on Quay](https://quay.io/repository/koudaiii/sltd/status "Docker Repository on Quay")](https://quay.io/repository/koudaiii/sltd)
 [![GitHub release](https://img.shields.io/github/release/koudaiii/sltd.svg)](https://github.com/koudaiii/sltd/releases)
 
-Tag ELB from service label. Service Label to Tag by Daemon = sltd
-
+Tag ELB from service label in kubernetes cluster for Datadog monitoring.
+Service Label to Tag by Daemon = sltd
 
 ![example](_images/example.png)
 
@@ -82,14 +82,10 @@ $ docker run \
 
 ## Usage
 
-`sltd`make sync labels and tags in AWS ELB.
-
-* cluster name is `kubernetescluster` key
-* namespace is `kube_namespace` key
-* service name is `kube_name` key
-
-
-
+* `sltd` make tag ELB from labels in kubernetes cluster.
+  * cluster name is `kubernetescluster` key
+  * namespace is `kube_namespace` key
+  * service name is `kube_name` key
 
 * `--onetime` option
 

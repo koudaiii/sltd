@@ -64,13 +64,14 @@ func (c *Client) attachELBTags(tags []elb.Tag, service kubernetes.Service) error
 			}
 			if t.Key == s.Key {
 				log.Println("Replace Tag")
-				log.Println(s)
+				log.Printf("Before: %v\n",t)
+				log.Printf("After: %v\n",s)
 				c.awsclient.DeleteTag(service.Name, labelToTag.Key)
 				c.awsclient.AddTag(service.Name, labelToTag)
 			}
 		}
 		if alreadyTag {
-			log.Println("Already Tag")
+			log.Println("skip. ELB Already tagged.")
 			log.Println(labelToTag)
 		} else {
 			log.Println("Add Tag")

@@ -1,6 +1,5 @@
 # sltd
 
-
 [![Build Status](https://travis-ci.org/koudaiii/sltd.svg?branch=master)](https://travis-ci.org/koudaiii/sltd)
 [![Docker Repository on Quay](https://quay.io/repository/koudaiii/sltd/status "Docker Repository on Quay")](https://quay.io/repository/koudaiii/sltd)
 [![GitHub release](https://img.shields.io/github/release/koudaiii/sltd.svg)](https://github.com/koudaiii/sltd/releases)

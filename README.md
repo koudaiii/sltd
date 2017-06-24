@@ -5,7 +5,7 @@
 [![Docker Repository on Quay](https://quay.io/repository/koudaiii/sltd/status "Docker Repository on Quay")](https://quay.io/repository/koudaiii/sltd)
 [![GitHub release](https://img.shields.io/github/release/koudaiii/sltd.svg)](https://github.com/koudaiii/sltd/releases)
 
-Get container imagetag for Kubernetes PodsTag ELB from service label. Service Label to Tag by Daemon = sltd
+Tag ELB from service label. Service Label to Tag by Daemon = sltd
 
 
 ![example](_images/example.png)
@@ -99,7 +99,7 @@ $ sltd --onetime
 
 * `--sync-interva` option
 ```bash
-$ sltd  -sync-interva=10
+$ sltd  --sync-interva=10
 ```
 
 ### kubeconfig file

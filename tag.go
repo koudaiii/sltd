@@ -42,12 +42,12 @@ func (c *Client) process() {
 			return
 		}
 
-		c.attachELBTags(tags, c.updateLabelsKubernetesCluseter(tags, s))
+		c.attachELBTags(tags, c.updateLabelsKubernetesCluster(tags, s))
 	}
 
 }
 
-func (c *Client) updateLabelsKubernetesCluseter(tags []elb.Tag, service kubernetes.Service) kubernetes.Service {
+func (c *Client) updateLabelsKubernetesCluster(tags []elb.Tag, service kubernetes.Service) kubernetes.Service {
 	service.Labels = append(service.Labels, kubernetes.Label{
 		Key:   "kube_name",
 		Value: service.KubeName,

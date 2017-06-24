@@ -36,7 +36,6 @@ Created by [gh-md-toc](https://github.com/ekalinin/github-markdown-toc)
 * Kubernetes 1.3 or later
 * AWS Credentials keys (need DescribeTags, AddTags, RemoveTags)
 
-
 ## Installation
 
 ### Using Homebrew (OS X only)
@@ -100,7 +99,6 @@ $ sltd  --sync-interva=10
 ### kubeconfig file
 
 if `sltd` uses out of cluster, `~/.kube/config` as default.
-
 
 ### Options
 

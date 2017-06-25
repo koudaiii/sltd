@@ -41,29 +41,8 @@ func (c *Client) process() {
 			log.Println(err)
 			return
 		}
-		c.attachELBTags(tags, c.updateLabelsKubernetesCluseter(tags, s))
+		c.attachELBTags(tags, c.kubeclient.UpdateLabelsKubernetesCluster(exchangeTypeFromTagsToLabels(tags), s))
 	}
-
-}
-
-func (c *Client) updateLabelsKubernetesCluseter(tags []elb.Tag, service kubernetes.Service) kubernetes.Service {
-	service.Labels = append(service.Labels, kubernetes.Label{
-		Key:   "kube_name",
-		Value: service.KubeName,
-	})
-	service.Labels = append(service.Labels, kubernetes.Label{
-		Key:   "kube_namespace",
-		Value: service.KubeNameSpace,
-	})
-	for _, t := range tags {
-		if t.Key == "KubernetesCluster" {
-			service.Labels = append(service.Labels, kubernetes.Label{
-				Key:   "kubernetescluster",
-				Value: t.Value,
-			})
-		}
-	}
-	return service
 }
 
 func (c *Client) attachELBTags(tags []elb.Tag, service kubernetes.Service) error {
@@ -84,13 +63,14 @@ func (c *Client) attachELBTags(tags []elb.Tag, service kubernetes.Service) error
 			}
 			if t.Key == s.Key {
 				log.Println("Replace Tag")
-				log.Println(s)
+				log.Printf("Before: %v\n",t)
+				log.Printf("After: %v\n",s)
 				c.awsclient.DeleteTag(service.Name, labelToTag.Key)
 				c.awsclient.AddTag(service.Name, labelToTag)
 			}
 		}
 		if alreadyTag {
-			log.Println("Already Tag")
+			log.Println("skip. ELB Already tagged.")
 			log.Println(labelToTag)
 		} else {
 			log.Println("Add Tag")
@@ -99,4 +79,14 @@ func (c *Client) attachELBTags(tags []elb.Tag, service kubernetes.Service) error
 		}
 	}
 	return nil
+}
+
+func exchangeTypeFromTagsToLabels(tags []elb.Tag) (labels []kubernetes.Label){
+	for _, t := range tags {
+		labels = append(labels, kubernetes.Label{
+			Key: t.Key,
+			Value: t.Value,
+		})
+	}
+	return 	labels
 }

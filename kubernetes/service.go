@@ -56,3 +56,23 @@ func (c *KubeClient) GetAllServices(namespaces *v1.NamespaceList) (services []Se
 
 	return services, nil
 }
+
+func (c *KubeClient) UpdateLabelsKubernetesCluster(elbTags []Label, service Service) Service {
+	service.Labels = append(service.Labels, Label{
+		Key:   "kube_name",
+		Value: service.KubeName,
+	})
+	service.Labels = append(service.Labels, Label{
+		Key:   "kube_namespace",
+		Value: service.KubeNameSpace,
+	})
+	for _, t := range elbTags {
+		if t.Key == "KubernetesCluster" {
+			service.Labels = append(service.Labels, Label{
+				Key:   "kubernetescluster",
+				Value: t.Value,
+			})
+		}
+	}
+	return service
+}

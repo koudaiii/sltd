@@ -26,6 +26,10 @@ spec:
           args:
             - "--sync-interval=60"
         env:
+        - name: AWS_DEFAULT_REGION
+          value: "ap-northeast-1"
+        - name: AWS_REGION
+          value: "ap-northeast-1"
         - name: AWS_ACCESS_KEY_ID
           valueFrom:
             secretKeyRef:

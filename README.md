@@ -104,6 +104,7 @@ if `sltd` uses out of cluster, `~/.kube/config` as default.
 
 |Option|Description|Required|Default|
 |---------|-----------|-------|-------|
+|`--onetime=bool` | run one time and exit.|optional|false|
 |`--in-cluster=bool`| if `sltd` uses out of cluster,need `--in-cluster=false`|optional|true|
 |`--sync-interval=integer`|the time duration between template processing.|optional|60|
 |`-h`, `-help`|Print command line usage|||

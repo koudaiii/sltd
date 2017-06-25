@@ -1,0 +1,27 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: sltd
+spec:
+  minReadySeconds: 30
+  replicas: 1
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 0
+  template:
+    metadata:
+      labels:
+        name: sltd
+    spec:
+      containers:
+        - name: sltd
+          image: "quay.io/koudaiii/sltd:latest"
+          resources:
+            requests:
+              cpu: 100m
+              memory: 30Mi
+          command:
+            - "/sltd"
+          args:
+            - "--sync-interval=60"

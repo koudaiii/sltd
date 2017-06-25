@@ -124,11 +124,32 @@ $ make
 ### Kubernetes
 
 ```yaml
-containers:
-  - name: sltd
-    image: "quay.io/koudaiii/sltd:latest"
-    args:
-      - "--sync-interval=60"
+      containers:
+      - image: "quay.io/koudaiii/sltd:latest"
+        name: sltd
+          resources:
+            requests:
+              cpu: 100m
+              memory: 30Mi
+          command:
+            - "/sltd"
+          args:
+            - "--sync-interval=60"
+        env:
+        - name: AWS_DEFAULT_REGION
+          value: "ap-northeast-1"
+        - name: AWS_REGION
+          value: "ap-northeast-1"
+        - name: AWS_ACCESS_KEY_ID
+          valueFrom:
+            secretKeyRef:
+              name: dotenv
+              key: aws-access-key-id
+        - name: AWS_SECRET_ACCESS_KEY
+          valueFrom:
+            secretKeyRef:
+              name: dotenv
+              key: aws-secret-access-key
 ```
 
 ## Author

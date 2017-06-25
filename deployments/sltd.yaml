@@ -1,0 +1,42 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: sltd
+spec:
+  minReadySeconds: 30
+  replicas: 1
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 0
+  template:
+    metadata:
+      labels:
+        name: sltd
+    spec:
+      containers:
+      - image: "quay.io/koudaiii/sltd:latest"
+        name: sltd
+          resources:
+            requests:
+              cpu: 100m
+              memory: 30Mi
+          command:
+            - "/sltd"
+          args:
+            - "--sync-interval=60"
+        env:
+        - name: AWS_DEFAULT_REGION
+          value: "ap-northeast-1"
+        - name: AWS_REGION
+          value: "ap-northeast-1"
+        - name: AWS_ACCESS_KEY_ID
+          valueFrom:
+            secretKeyRef:
+              name: dotenv
+              key: aws-access-key-id
+        - name: AWS_SECRET_ACCESS_KEY
+          valueFrom:
+            secretKeyRef:
+              name: dotenv
+              key: aws-secret-access-key

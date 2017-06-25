@@ -41,7 +41,6 @@ func (c *Client) process() {
 			log.Println(err)
 			return
 		}
-
 		c.attachELBTags(tags, c.kubeclient.UpdateLabelsKubernetesCluster(exchangeTypeFromTagsToLabels(tags), s))
 	}
 }
@@ -79,7 +78,6 @@ func (c *Client) attachELBTags(tags []elb.Tag, service kubernetes.Service) error
 			c.awsclient.AddTag(service.Name, labelToTag)
 		}
 	}
-
 	return nil
 }
 

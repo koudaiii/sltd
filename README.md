@@ -1,12 +1,11 @@
 # sltd
 
-
 [![Build Status](https://travis-ci.org/koudaiii/sltd.svg?branch=master)](https://travis-ci.org/koudaiii/sltd)
 [![Docker Repository on Quay](https://quay.io/repository/koudaiii/sltd/status "Docker Repository on Quay")](https://quay.io/repository/koudaiii/sltd)
 [![GitHub release](https://img.shields.io/github/release/koudaiii/sltd.svg)](https://github.com/koudaiii/sltd/releases)
 
-Get container imagetag for Kubernetes PodsTag ELB from service label. Service Label to Tag by Daemon = sltd
-
+Tag ELB from service label in kubernetes cluster for Datadog monitoring.
+Service Label to Tag by Daemon = sltd
 
 ![example](_images/example.png)
 
@@ -36,7 +35,6 @@ Created by [gh-md-toc](https://github.com/ekalinin/github-markdown-toc)
 
 * Kubernetes 1.3 or later
 * AWS Credentials keys (need DescribeTags, AddTags, RemoveTags)
-
 
 ## Installation
 
@@ -82,14 +80,10 @@ $ docker run \
 
 ## Usage
 
-`sltd`make sync labels and tags in AWS ELB.
-
-* cluster name is `kubernetescluster` key
-* namespace is `kube_namespace` key
-* service name is `kube_name` key
-
-
-
+* `sltd` make tag ELB from labels in kubernetes cluster.
+  * cluster name is `kubernetescluster` key
+  * namespace is `kube_namespace` key
+  * service name is `kube_name` key
 
 * `--onetime` option
 
@@ -99,13 +93,12 @@ $ sltd --onetime
 
 * `--sync-interva` option
 ```bash
-$ sltd  -sync-interva=10
+$ sltd  --sync-interva=10
 ```
 
 ### kubeconfig file
 
 if `sltd` uses out of cluster, `~/.kube/config` as default.
-
 
 ### Options
 

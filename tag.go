@@ -42,7 +42,7 @@ func (c *Client) process() {
 			return
 		}
 
-		c.attachELBTags(tags, c.kubeclient.UpdateLabelsKubernetesCluster(tags, s))
+		c.attachELBTags(tags, c.kubeclient.UpdateLabelsKubernetesCluster(exchangeTypeFromTagsToLabels(tags), s))
 	}
 }
 

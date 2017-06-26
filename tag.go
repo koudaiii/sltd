@@ -41,7 +41,7 @@ func (c *Client) process() {
 			log.Println(err)
 			return
 		}
-		c.attachELBTags(tags, c.kubeclient.UpdateLabelsKubernetesCluster(exchangeTypeFromTagsToLabels(tags), s))
+		c.attachELBTags(tags, c.kubeclient.UpdateLabelsToDataDogFormat(exchangeTypeFromTagsToLabels(tags), s))
 	}
 }
 

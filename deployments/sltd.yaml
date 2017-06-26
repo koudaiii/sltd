@@ -17,14 +17,14 @@ spec:
       containers:
       - image: "quay.io/koudaiii/sltd:latest"
         name: sltd
-          resources:
-            requests:
-              cpu: 100m
-              memory: 30Mi
-          command:
-            - "/sltd"
-          args:
-            - "--sync-interval=60"
+        resources:
+          requests:
+            cpu: 100m
+            memory: 30Mi
+        command:
+          - "/sltd"
+        args:
+         - "--sync-interval=60s"
         env:
         - name: AWS_DEFAULT_REGION
           value: "ap-northeast-1"

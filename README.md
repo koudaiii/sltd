@@ -7,7 +7,13 @@
 Tag ELB from service label in kubernetes cluster for Datadog monitoring.
 Service Label to Tag by Daemon = sltd
 
+- `kube_namespace` filter in Metrics Explorer
+
 ![example](_images/example.png)
+
+- Kubernetes with ELB requests and status in Dashboard
+
+![example](_images/dashboard.png)
 
 Table of Contents
 =================

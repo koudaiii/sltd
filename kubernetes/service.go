@@ -37,7 +37,7 @@ func (c *KubeClient) GetAllServices(namespaces *v1.NamespaceList) (services []Se
 				labels := []Label{}
 				for key, value := range s.ObjectMeta.Labels {
 					labels = append(labels, Label{
-						Key:   key,
+						Key:   `kube_` + key,
 						Value: value,
 					})
 				}
@@ -58,10 +58,6 @@ func (c *KubeClient) GetAllServices(namespaces *v1.NamespaceList) (services []Se
 }
 
 func (c *KubeClient) UpdateLabelsToDataDogFormat(elbTags []Label, service Service) Service {
-
-	for _, s := range service.Labels {
-		s.Key = "kube_" + s.Key
-	}
 	service.Labels = append(service.Labels, Label{
 		Key:   "kube_service",
 		Value: service.KubeName,

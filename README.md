@@ -7,7 +7,13 @@
 Tag ELB from service label in kubernetes cluster for Datadog monitoring.
 Service Label to Tag by Daemon = sltd
 
+- `kube_namespace` filter in Metrics Explorer
+
 ![example](_images/example.png)
+
+- Kubernetes with ELB requests and status in Dashboard
+
+![example](_images/dashboard.png)
 
 Table of Contents
 =================
@@ -91,9 +97,9 @@ $ docker run \
 $ sltd --onetime
 ```
 
-* `--sync-interva` option
+* `--sync-interval` option
 ```bash
-$ sltd  --sync-interva=10
+$ sltd  --sync-interval=10s
 ```
 
 ### kubeconfig file
@@ -106,7 +112,7 @@ if `sltd` uses out of cluster, `~/.kube/config` as default.
 |---------|-----------|-------|-------|
 |`--onetime=bool` | run one time and exit.|optional|false|
 |`--in-cluster=bool`| if `sltd` uses out of cluster,need `--in-cluster=false`|optional|true|
-|`--sync-interval=integer`|the time duration between template processing.|optional|60|
+|`--sync-interval=string`|the time duration between template processing.|optional|60s|
 |`-h`, `-help`|Print command line usage|||
 |`-v`, `-version`|Print version|||
 
@@ -135,7 +141,7 @@ $ make
           command:
             - "/sltd"
           args:
-            - "--sync-interval=60"
+            - "--sync-interval=60s"
         env:
         - name: AWS_DEFAULT_REGION
           value: "ap-northeast-1"

@@ -15,6 +15,14 @@ Service Label to Tag by Daemon = sltd
 
 ![example](_images/dashboard.png)
 
+- Dashboard with 2XX / request_count
+
+![example](_images/sla.png)
+
+```
+"q": "100 * sum:aws.elb.httpcode_backend_2xx{$pod,$replication_controller,$namespace,$cluster,$scope,$kube_name,$kube_deployment}.as_count() / sum:aws.elb.request_count{$pod,$replication_controller,$namespace,$cluster,$scope,$kube_name,$kube_deployment}.as_count()"
+```
+
 Table of Contents
 =================
 

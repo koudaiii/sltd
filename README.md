@@ -149,7 +149,7 @@ $ make
           command:
             - "/sltd"
           args:
-            - "--sync-interval=60s"
+            - "--sync-interval=300s"
         env:
         - name: AWS_DEFAULT_REGION
           value: "ap-northeast-1"

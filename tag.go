@@ -30,15 +30,16 @@ func (c *Client) process() {
 
 	svc, err := c.kubeclient.GetAllServices(namespaces)
 	if err != nil {
-		log.Println(err)
+		log.Fatalln(err)
 		return
 	}
 	log.Println(svc)
 
 	for _, s := range svc {
+		// log.Println(s)
 		tags, err := c.awsclient.DescribeTags(s.Name)
 		if err != nil {
-			log.Println(err)
+			log.Fatalln(err)
 			return
 		}
 		c.attachELBTags(tags, c.kubeclient.UpdateLabelsToDataDogFormat(exchangeTypeFromTagsToLabels(tags), s))

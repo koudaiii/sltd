@@ -2,7 +2,7 @@ package kubernetes
 
 import (
 	_ "log"
-	"strings"
+	"regexp"
 
 	meta_v1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/client-go/pkg/api/v1"
@@ -22,8 +22,22 @@ type Label struct {
 	Value string
 }
 
-func (c *KubeClient) GetAllServices(namespaces *v1.NamespaceList) (services []Service, err error) {
+var publicELBNameRegexp = regexp.MustCompile(`^(.*?)-[a-z0-9]*\..*.amazonaws.com$`)
+var internalELBNameRegexp = regexp.MustCompile(`^internal-(.*?)$`)
 
+func getELBName(elbHost string) (elbName string, err error) {
+	elbName = string(publicELBNameRegexp.FindSubmatch([]byte(elbHost))[1])
+	internal, err := regexp.MatchString(`^internal-(.*?)$`, elbName)
+	if err != nil {
+		return "", err
+	}
+	if internal {
+		elbName = string(internalELBNameRegexp.FindSubmatch([]byte(elbName))[1])
+	}
+	return elbName, nil
+}
+
+func (c *KubeClient) GetAllServices(namespaces *v1.NamespaceList) (services []Service, err error) {
 	for _, n := range namespaces.Items {
 		// log.Println(n.ObjectMeta.Name)
 		service, err := c.client.Services(n.ObjectMeta.Name).List(meta_v1.ListOptions{})
@@ -41,12 +55,19 @@ func (c *KubeClient) GetAllServices(namespaces *v1.NamespaceList) (services []Se
 						Value: value,
 					})
 				}
+
+				elbName, err := getELBName(s.Status.LoadBalancer.Ingress[0].Hostname)
+				if err != nil {
+					return nil, err
+				}
+				// log.Println(elbName)
+
 				services = append(services,
 					Service{
 						KubeName:            s.Name,
 						KubeNameSpace:       s.Namespace,
 						KubernetesCluster:   s.ClusterName,
-						Name:                strings.Split(s.Status.LoadBalancer.Ingress[0].Hostname, "-")[0],
+						Name:                elbName,
 						LoadBalancerIngress: s.Status.LoadBalancer.Ingress[0].Hostname,
 						Labels:              labels,
 					})

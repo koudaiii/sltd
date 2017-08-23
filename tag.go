@@ -64,8 +64,8 @@ func (c *Client) attachELBTags(tags []elb.Tag, service kubernetes.Service) error
 			}
 			if t.Key == s.Key {
 				log.Println("Replace Tag")
-				log.Printf("Before: %v\n",t)
-				log.Printf("After: %v\n",s)
+				log.Printf("Before: %v\n", t)
+				log.Printf("After: %v\n", s)
 				c.awsclient.DeleteTag(service.Name, labelToTag.Key)
 				c.awsclient.AddTag(service.Name, labelToTag)
 			}
@@ -82,12 +82,12 @@ func (c *Client) attachELBTags(tags []elb.Tag, service kubernetes.Service) error
 	return nil
 }
 
-func exchangeTypeFromTagsToLabels(tags []elb.Tag) (labels []kubernetes.Label){
+func exchangeTypeFromTagsToLabels(tags []elb.Tag) (labels []kubernetes.Label) {
 	for _, t := range tags {
 		labels = append(labels, kubernetes.Label{
-			Key: t.Key,
+			Key:   t.Key,
 			Value: t.Value,
 		})
 	}
-	return 	labels
+	return labels
 }

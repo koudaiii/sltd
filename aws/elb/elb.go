@@ -1,8 +1,6 @@
 package elb
 
 import (
-	"log"
-
 	awspkg "github.com/koudaiii/sltd/aws"
 
 	"github.com/aws/aws-sdk-go/aws"
@@ -60,12 +58,11 @@ func (c *AwsClient) AddTag(name string, tag *Tag) error {
 		},
 	}
 
-	result, err := c.client.AddTags(input)
+	_, err := c.client.AddTags(input)
 	if err != nil {
 		return err
 	}
 
-	log.Println(result)
 	return nil
 }
 
@@ -81,11 +78,10 @@ func (c *AwsClient) DeleteTag(name string, key string) error {
 		},
 	}
 
-	result, err := c.client.RemoveTags(input)
+	_, err := c.client.RemoveTags(input)
 	if err != nil {
 		return err
 	}
 
-	log.Println(result)
 	return nil
 }

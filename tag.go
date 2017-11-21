@@ -20,20 +20,17 @@ func NewClient(inCluster bool) *Client {
 }
 
 func (c *Client) process() {
-
 	namespaces, err := c.kubeclient.GetAllNamespaces()
 	if err != nil {
 		log.Fatalln(err)
 		return
 	}
-	log.Println(namespaces)
 
 	svc, err := c.kubeclient.GetAllServices(namespaces)
 	if err != nil {
 		log.Fatalln(err)
 		return
 	}
-	log.Println(svc)
 
 	for _, s := range svc {
 		// log.Println(s)
@@ -47,8 +44,6 @@ func (c *Client) process() {
 }
 
 func (c *Client) attachELBTags(tags []elb.Tag, service kubernetes.Service) error {
-	log.Println(tags)
-	log.Println(service)
 	for _, s := range service.Labels {
 		alreadyTag := false
 
@@ -72,10 +67,8 @@ func (c *Client) attachELBTags(tags []elb.Tag, service kubernetes.Service) error
 		}
 		if alreadyTag {
 			log.Println("skip. ELB Already tagged.")
-			log.Println(labelToTag)
 		} else {
 			log.Println("Add Tag")
-			log.Println(s)
 			c.awsclient.AddTag(service.Name, labelToTag)
 		}
 	}

@@ -39,7 +39,6 @@ func NewKubeClient(inCluster bool) *KubeClient {
 		log.Printf("service host: %s", config.Host)
 
 		clientset, err := kubernetes.NewForConfig(config)
-		log.Println(clientset)
 		if err != nil {
 			log.Fatalln(err)
 			os.Exit(1)

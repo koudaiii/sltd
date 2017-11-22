@@ -1,3 +1,7 @@
+## [v0.2.2](https://github.com/koudaiii/sltd/releases/tag/v0.2.1)
+
+Fix process #27
+
 ## [v0.2.1](https://github.com/koudaiii/sltd/releases/tag/v0.2.1)
 
 Remove debug prints #25

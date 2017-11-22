@@ -1,5 +1,5 @@
 NAME      := sltd
-VERSION   := v0.2.1
+VERSION   := v0.2.2
 REVISION  := $(shell git rev-parse --short HEAD)
 
 SRCS      := $(shell find . -name '*.go' -type f)

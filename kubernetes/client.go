@@ -22,14 +22,12 @@ func isNotExists() bool {
 func NewKubeClient(inCluster bool) *KubeClient {
 	if isNotExists() && !(inCluster) {
 		log.Fatalln("kubeconfig invalid and --in-cluster is false; kubeconfig must be set to a valid file(kubeconfig default file name: $HOME/.kube/config)")
-		os.Exit(1)
 	}
 
 	if inCluster {
 		config, err := rest.InClusterConfig()
 		if err != nil {
 			log.Fatalln(err)
-			os.Exit(1)
 		}
 		tokenPresent := false
 		if len(config.BearerToken) > 0 {
@@ -41,7 +39,6 @@ func NewKubeClient(inCluster bool) *KubeClient {
 		clientset, err := kubernetes.NewForConfig(config)
 		if err != nil {
 			log.Fatalln(err)
-			os.Exit(1)
 		}
 
 		log.Println("Testing communication with server")
@@ -49,7 +46,6 @@ func NewKubeClient(inCluster bool) *KubeClient {
 
 		if err != nil {
 			log.Fatalln(err)
-			os.Exit(1)
 		}
 		log.Println("Communication with server successful")
 
@@ -66,21 +62,17 @@ func NewKubeClient(inCluster bool) *KubeClient {
 	config, err := kubeConfig.ClientConfig()
 	if err != nil {
 		log.Fatalln(err)
-		os.Exit(1)
 	}
 
 	clientset, err := kubernetes.NewForConfig(config)
-	// log.Println(clientset)
 	if err != nil {
 		log.Fatalln(err)
-		os.Exit(1)
 	}
 
 	log.Println("Testing communication with server")
 	_, err = clientset.Discovery().ServerVersion()
 	if err != nil {
 		log.Fatalln(err)
-		os.Exit(1)
 	}
 	log.Println("Communication with server successful")
 

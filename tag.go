@@ -1,7 +1,9 @@
 package main
 
 import (
+	"fmt"
 	"log"
+	"os"
 
 	"github.com/koudaiii/sltd/aws/elb"
 	"github.com/koudaiii/sltd/kubernetes"
@@ -22,13 +24,13 @@ func NewClient(inCluster bool) *Client {
 func (c *Client) process() {
 	namespaces, err := c.kubeclient.GetAllNamespaces()
 	if err != nil {
-		log.Fatalln(err)
+		fmt.Fprintln(os.Stderr, err)
 		return
 	}
 
 	svc, err := c.kubeclient.GetAllServices(namespaces)
 	if err != nil {
-		log.Fatalln(err)
+		fmt.Fprintln(os.Stderr, err)
 		return
 	}
 
@@ -36,7 +38,7 @@ func (c *Client) process() {
 		// log.Println(s)
 		tags, err := c.awsclient.DescribeTags(s.Name)
 		if err != nil {
-			log.Fatalln(err)
+			fmt.Fprintln(os.Stderr, err)
 			return
 		}
 		c.attachELBTags(tags, c.kubeclient.UpdateLabelsToDataDogFormat(exchangeTypeFromTagsToLabels(tags), s))

@@ -32,7 +32,6 @@ func main() {
 
 	if err := flags.Parse(os.Args[1:]); err != nil {
 		log.Fatalln(err)
-		os.Exit(1)
 	}
 
 	if version {
